@@ -1,6 +1,11 @@
 const bcrypt = require('bcryptjs')
+const gravatar = require('gravatar')
+const path = require('path')
+const fs = require('fs/promises')
 
 const { User } = require('../../model')
+
+const avatarDir = path.join(__dirname, '../../', 'public/avatars');
 
 const signup = async (req, res, next) => {
   try {
@@ -16,7 +21,14 @@ const signup = async (req, res, next) => {
     }
 
     const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
-    const result = await User.create({ email, password: hashPassword })
+    const defaultAvatar = gravatar.url(email, {protocol: 'https', s: '250'})
+    const result = await User.create({ email, password: hashPassword, avatarURL: defaultAvatar })
+
+    const id = result._id.toString()
+    const pathDir = path.join(avatarDir, id);
+    await fs.mkdir(pathDir)
+    console.log(pathDir)
+    
     res.status(201).json({
       status: 'saccess',
       code: 201,
