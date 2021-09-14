@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const { validation, authenticate } = require('../../middlewares')
+const { validation, authenticate, upload } = require('../../middlewares')
 const { joiUserSchema } = require('../../model')
 const { auth: ctrlAuth, contacts: ctrlContacts, user: ctrlUser } = require('../../controllers')
 
@@ -18,5 +18,7 @@ router.get('/users/current', authenticate, ctrlContacts.getAll)
 router.patch('/users', authenticate, ctrlUser.updateSubscr)
 
 router.get('/users/favorite', authenticate, ctrlContacts.getFavorite)
+
+router.patch('/users/avatars', authenticate, upload.single("avatarURL"), ctrlUser.updateAvatar)
 
 module.exports = router
