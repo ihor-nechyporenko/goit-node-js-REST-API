@@ -43,7 +43,7 @@ const signup = async (req, res, next) => {
       to: email,
       from: EMAIL,
       subject: 'Registration',
-      html: `<a href="http://localhost:3000/api/auth/verify/${verifyToken}">Confirm registration</a>`,
+      html: `<a href="http://localhost:3000/api/auth/users/verify/${verifyToken}">Confirm registration</a>`,
     };
 
     sendEmail(data);

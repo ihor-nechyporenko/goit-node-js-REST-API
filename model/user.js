@@ -44,9 +44,14 @@ const joiUserSchema = Joi.object({
   verify: Joi.boolean().default(false),
 })
 
+const joiUserEmailSchema = Joi.object({
+  email: Joi.string().email().required(),
+})
+
 const User = model('user', userSchema)
 
 module.exports = {
   User,
-  joiUserSchema
+  joiUserSchema,
+  joiUserEmailSchema,
 }
