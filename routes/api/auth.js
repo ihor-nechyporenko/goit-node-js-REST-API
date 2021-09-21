@@ -9,6 +9,8 @@ const validationUserMiddleware = validation(joiUserSchema)
 
 router.post('/users/signup', validationUserMiddleware, ctrlAuth.signup)
 
+router.get('/verify/:verificationToken', ctrlAuth.verify)
+
 router.post('/users/signin', validationUserMiddleware, ctrlAuth.signin)
 
 router.get('/users/signout', authenticate, ctrlAuth.signout)
