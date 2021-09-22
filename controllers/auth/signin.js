@@ -16,6 +16,14 @@ const signin = async (req, res, next) => {
       })
     }
 
+    if(!user.verify) {
+      return res.status(403).json({
+        status: 'error',
+        code: 403,
+        message: 'Email is not verified'
+      })
+    }
+
     const hashPassword = user.password
     const compareResult = bcrypt.compareSync(password, hashPassword)
 
